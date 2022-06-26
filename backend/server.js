@@ -1,8 +1,8 @@
-import Koa from "Koa";
-import bodyParser from "koa-bodyParser";
-//import cors 3rd party pckg- to enable communication between 2 different host platforms
-import Cors from "koa-cors";
-import DbClient from './dal/index.js';
+const Koa = require ("Koa");
+const bodyParser = require ("koa-bodyParser");
+//const cors 3rd party pckg- to enable communication between 2 different host platforms
+const Cors = require ("koa-cors");
+const DbClient = require ('./dal/index.js');
 
 //create a new server(app) using Koa.js
 const app = new Koa();

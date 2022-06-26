@@ -1,5 +1,5 @@
-import mongodb from 'mongodb';
-const {MongoClient} = mongodb;
+// const mongodb = require('mongodb');
+const {MongoClient} = require('mongodb');
 const DbClient = new MongoClient('mongodb://localhost:27017', {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -13,5 +13,4 @@ DbClient.connect(err => {
     console.log('Successfully connected to Mongo DB...');
 });
 
-// module.exports = DbClient;
-export default DbClient;
+module.exports = DbClient;
