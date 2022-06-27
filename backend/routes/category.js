@@ -1,5 +1,5 @@
 const KoaRouter = require('koa-router');
-const { getAll, addCategory, getRoomsByCategory } = require('../controllers/category');
+const { getAll, addCategory, getRoomsByCategory, addRoomToACategory } = require('../controllers/category');
 
 const router = new KoaRouter({
     prefix: "/api/categories"
@@ -8,5 +8,6 @@ const router = new KoaRouter({
 router.get('/all', getAll);
 router.post('/add', addCategory);
 router.get('/rooms-by-category/:id', getRoomsByCategory);
+router.post('/add-room/:id', addRoomToACategory)
 
 module.exports = router;

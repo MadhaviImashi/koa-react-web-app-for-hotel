@@ -52,6 +52,15 @@ const getCategoriesOfARoom = async (ctx) => {
     }
 }
 
+// const getTotalAmountOfAllRooms = (ctx) => {
+//     try {
+
+//     }
+//     catch (err) {
+        
+//     }
+// }
+
 module.exports = {
     getAllRooms,
     addRoom,

@@ -41,7 +41,6 @@ const getRoomsByCategory = async (ctx) => {
 }
 
 const addCategory = async (ctx) => {
-
    let newCategory = new Category(ctx.request.body);
   
     try {
@@ -61,8 +60,25 @@ const addCategory = async (ctx) => {
     }
 }
 
+const addRoomToACategory = async (ctx) => {
+    let roomId = ctx.request.body.roomId;
+    try {
+        let category = await Category.findById(ctx.params.id);
+        //add room to selected category
+        category.rooms.push(roomId);
+        category.save();
+        console.log('categ', category);
+        ctx.status = 201;
+        return ctx.body = "room added to category";
+    }
+    catch (err) {
+        ctx.status = err.status || 500;
+    }
+}
+
 module.exports = {
     getAll,
     addCategory,
-    getRoomsByCategory
+    getRoomsByCategory,
+    addRoomToACategory
 }
