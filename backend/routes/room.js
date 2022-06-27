@@ -1,11 +1,12 @@
 const KoaRouter = require('koa-router');
-const { addRoom, getAllRooms } = require('../controllers/room');
+const { addRoom, getAllRooms, getCategoriesOfARoom } = require('../controllers/room');
 
 const Router = new KoaRouter({
     prefix: "/api/rooms"
 })
 
-Router.get('/', getAllRooms);
-Router.post('/', addRoom)
+Router.get('/all', getAllRooms);
+Router.post('/add', addRoom);
+Router.get('/categories-by-room/:id', getCategoriesOfARoom);
 
 module.exports = Router;

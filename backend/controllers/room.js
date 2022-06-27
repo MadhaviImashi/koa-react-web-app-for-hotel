@@ -32,7 +32,28 @@ const addRoom = async (ctx) => {
     }
 }
 
+const getCategoriesOfARoom = async (ctx) => {
+    try {
+        //find room by room id
+        let room = await Room.findById(ctx.params.id).populate({ path: "categories" });
+        let categoriesOfRoom = room.categories;
+        ctx.set("Content-Type", "application/json");
+        ctx.status = 200;
+        ctx.body = {
+            message: "get categories list belongs to a room",
+            categoriesOfRoom
+        }
+    }
+    catch (err) {
+        ctx.status = err.status || 500;
+        ctx.body = {
+            message: "couldn't find categories for this room",
+        }
+    }
+}
+
 module.exports = {
     getAllRooms,
-    addRoom
+    addRoom,
+    getCategoriesOfARoom
 }
