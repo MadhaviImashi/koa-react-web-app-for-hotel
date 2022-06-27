@@ -2,7 +2,7 @@ const KoaRouter = require('koa-router');
 const { getAll, addCategory } = require('../controllers/category');
 
 const router = new KoaRouter({
-    prefix: "/api/category"
+    prefix: "/api/categories"
 });
 
 router.get('/', getAll);

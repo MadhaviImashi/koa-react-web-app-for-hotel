@@ -1,14 +1,13 @@
-const httpStatus = require('http-status');
 const Category = require('../models/category');
 
 const getAll = async (ctx) => {
     try {
-        let allCategories = await Category.find({});
+        let data = await Category.find({});
         ctx.set("Content-Type", "application/json");
         ctx.status = 200;
         return ctx.body = {
             message: "get all categories",
-            allCategories
+            data
         }
     }
     catch (err) {
