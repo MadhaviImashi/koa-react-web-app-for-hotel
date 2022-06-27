@@ -7,7 +7,6 @@ const KoaRouter = require('koa-router');
 const DbClient = require('./dal/index.js');
 const mongoose = require('mongoose');
 //import routes
-const inventoryRouter = require('./routes/inventory');
 const categoryRouter = require('./routes/category');
 const roomRouter = require('./routes/room');
 
@@ -28,7 +27,6 @@ app.use(async (ctx, next) => {
 });
 
 app.use(router.routes()).use(router.allowedMethods());
-app.use(inventoryRouter.routes())
 app.use(categoryRouter.routes())
 app.use(roomRouter.routes())
 
