@@ -1,23 +1,40 @@
 const Koa = require ("Koa");
-const bodyParser = require ("koa-bodyParser");
+const bodyParser = require("koa-bodyParser");
+const json = require('koa-json')
 //const cors 3rd party pckg- to enable communication between 2 different host platforms
-const Cors = require ("koa-cors");
-const DbClient = require ('./dal/index.js');
+const Cors = require("koa-cors");
+const KoaRouter = require('koa-router');
+const DbClient = require('./dal/index.js');
+const mongoose = require('mongoose');
+//import routes
+const inventoryRouter = require('./routes/inventory');
+const categoryRouter = require('./routes/category');
 
-//create a new server(app) using Koa.js
+//create a new server(app) using Koa.j
 const app = new Koa();
+const router = new KoaRouter();
 
 //add a cors parameter to each request header
 app.use(Cors());
 app.use(bodyParser());
+app.use(json());
 
 const PORT = process.env.PORT || 4000
 
 app.use(async (ctx, next) => {
   ctx.body = 'Hello World';
+  await next();
 });
 
+app.use(router.routes()).use(router.allowedMethods());
+app.use(inventoryRouter.routes())
+app.use(categoryRouter.routes())
+
 app.listen(PORT, () => {
-    DbClient; //run the mongodb connection file
+    DbClient(); //run the mongodb connection file
     console.log(`server started on port ${PORT}`);
 });
+
+// mongoose.connect("mongodb://127.0.0.1:27017/practice-final-exam-db",() => {
+//   app.listen(4000)
+// })
