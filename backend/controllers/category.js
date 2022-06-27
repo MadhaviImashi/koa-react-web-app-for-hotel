@@ -18,6 +18,28 @@ const getAll = async (ctx) => {
     }
 }
 
+const getRoomsByCategory = async (ctx) => {
+    let categoryId = ctx.params.id;
+
+    try {
+        let selectedCategory = await Category.findById(categoryId).populate({path: "rooms"});
+        let roomsInCategory = selectedCategory.rooms;
+        console.log('rooms in category', roomsInCategory);
+        ctx.set("Content-Type", "application/json");
+        ctx.status = 200;
+        return ctx.body = {
+            message: "get rooms by category",
+            roomsInCategory
+        }
+    }
+    catch (err) {
+        ctx.status = err.status || 500;
+        return ctx.body = {
+            message: "couldn't fetch rooms by category"
+        }
+    }
+}
+
 const addCategory = async (ctx) => {
 
    let newCategory = new Category(ctx.request.body);
@@ -41,5 +63,6 @@ const addCategory = async (ctx) => {
 
 module.exports = {
     getAll,
-    addCategory
+    addCategory,
+    getRoomsByCategory
 }
