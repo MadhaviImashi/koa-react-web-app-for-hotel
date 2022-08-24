@@ -10,6 +10,23 @@ const getAllRooms = async (ctx) => {
     catch (err) {
         ctx.status = err.status || 500;
         ctx.body = {
+            message: "couldn't fetch rooms"
+        }
+    }
+}
+
+const getRoomById = async (ctx) => {
+    try {
+        //find room by room id
+        let room = await Room.findById(ctx.params.id);
+
+        ctx.set("Content-Type", "application/json");
+        ctx.body = room;
+        ctx.status = 200;
+    }
+    catch (err) {
+        ctx.status = err.status || 500;
+        ctx.body = {
             message: "couldn't fetch room details"
         }
     }
@@ -63,6 +80,7 @@ const getCategoriesOfARoom = async (ctx) => {
 
 module.exports = {
     getAllRooms,
+    getRoomById,
     addRoom,
     getCategoriesOfARoom
 }
