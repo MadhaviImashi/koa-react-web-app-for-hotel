@@ -9,35 +9,34 @@ const Categories = () => {
   useEffect(() => {
     getAllCategories("/api/categories/all")
       .then((res) => {
+          console.log(res.data);
           setLoadedCategories(res.data);
-          console.log(loadedCategories);
+          console.log('after', loadedCategories);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
+  console.log('after2', loadedCategories);
+
   return (
     <div>
           <div>
-              <Link to="/rooms"><span className="link">All rooms</span></Link>
+              <Link to="/logout"><span className="link">All rooms</span></Link>
           </div>
           <br /><h3>All Categories</h3><br />
-          <div>
-              <Link to="/add-new-item"><button className="add-button">Add New Item</button></Link>
-          </div>
-         <br/>
-      <ul>
-        {loadedCategories.map((item) => (
-          <li key={item.id} className="item">
-            <div>{item.name}</div>
-                <div>Description: {item.description}</div><br/>
-                <div>Room: {item.room}</div><br/>
-                <button>Update</button>
-                <br/><br/>
-          </li>
-        ))}
-      </ul>
+          <ul>
+            {loadedCategories.map((item) => (
+              <li key={item.id} className="item">
+                <div>{item.name}</div>
+                    <div>Description: {item.description}</div><br/>
+                    <div>Room: {item.room}</div><br/>
+                    <button>Update</button>
+                    <br/><br/>
+              </li>
+            ))}
+          </ul>
     </div>
   );
 };
