@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 //import routes
 const categoryRouter = require('./routes/category');
 const roomRouter = require('./routes/room');
+const authRouter = require('./routes/authRoutes');
 
 //create a new server(app) using Koa.j
 const app = new Koa();
@@ -27,6 +28,7 @@ app.use(async (ctx, next) => {
 app.use(router.routes()).use(router.allowedMethods());
 app.use(categoryRouter.routes())
 app.use(roomRouter.routes())
+app.use(authRouter.routes())
 
 app.listen(PORT, () => {
     DbClient(); //run the mongodb connection file
