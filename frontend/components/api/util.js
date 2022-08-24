@@ -5,7 +5,7 @@ const axios = require("axios").default;
 
 const BASE_URL = "http://localhost:4000";
 
-export const getRequest = (BASE_URL, uri) => {
+export const getRequest = (uri) => {
 
   return new Promise((resolve, reject) => {
     axios
@@ -28,7 +28,7 @@ export const getRequest = (BASE_URL, uri) => {
   });
 };
 
-export const getByIDRequest = (BASE_URL, uri, id) => {
+export const getByIDRequest = (uri, id) => {
   return new Promise((resolve, reject) => {
     axios
       .get(`${BASE_URL}${uri}${id}`, {
@@ -48,7 +48,7 @@ export const getByIDRequest = (BASE_URL, uri, id) => {
   });
 };
 
-export const postRequest = (BASE_URL, uri, data) => {
+export const postRequest = (uri, data) => {
   return new Promise((resolve, reject) => {
     axios
       .post(`${BASE_URL}${uri}`, data, {
@@ -66,7 +66,7 @@ export const postRequest = (BASE_URL, uri, data) => {
   });
 };
 
-export const updateRequest = (BASE_URL, uri, id, data) => {
+export const updateRequest = (uri, id, data) => {
   return new Promise((resolve, reject) => {
     axios
       .put(`${BASE_URL}${uri}${id}`, data, {
@@ -83,7 +83,7 @@ export const updateRequest = (BASE_URL, uri, id, data) => {
   })
 }
 
-export const deleteRequest = (BASE_URL, uri, id) => {
+export const deleteRequest = (uri, id) => {
   return new Promise((resolve, reject) => {
     axios
       .delete(`${BASE_URL}${uri}${id}`, {
@@ -103,21 +103,3 @@ export const deleteRequest = (BASE_URL, uri, id) => {
   });
 }
 
-export const postRequestForMovies = (BASE_URL, uri, data) => {
-  return new Promise((resolve, reject) => {
-    axios
-      .post(`${BASE_URL}${uri}`, data, {
-        headers: { "Content-Type": "multipart/form-data" },
-        params: {
-          user_id: userID,
-    }
-      })
-      .then(function (response) {
-        resolve(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-        reject(error);
-      });
-  });
-};

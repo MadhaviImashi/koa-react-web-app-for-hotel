@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getItems } from "../../api/category";
+import { getAllCategories } from "../../api/category";
 import { Link } from "react-router-dom";
 import "../../Pages/styles.css";
 
