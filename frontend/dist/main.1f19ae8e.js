@@ -40252,11 +40252,21 @@ var LoginForm = function LoginForm() {
     (0, _Auth.login)('/api/auth/login', loginData).then(function (res) {
       console.log('ress', res); //if login is successful, save login data in the local storage
 
-      localStorage.setItem('type', res.data.type);
-      localStorage.setItem('name', res.data.name);
-      localStorage.setItem("user_id", res.data.userId);
-      localStorage.setItem('email', res.data.email);
-      navigate('/');
+      localStorage.setItem('type', res.data.data.type);
+      localStorage.setItem('name', res.data.data.name);
+      localStorage.setItem("user_id", res.data.data.userId);
+      localStorage.setItem('email', res.data.data.email); //re-dirrect user's according to the role
+
+      var userType = localStorage.getItem('type');
+      console.log('type', userType);
+
+      if (userType == 'student') {
+        navigate('/student-page');
+      } else if (userType == 'teacher') {
+        navigate('/teacher-page');
+      } else if (userType == 'admin') {
+        navigate('/rooms');
+      }
     });
   };
 
@@ -40372,6 +40382,7 @@ var Register = function Register() {
     value: registeredData.type,
     onChange: handleChange
   }, /*#__PURE__*/_react.default.createElement("option", {
+    defaultValue: 'student',
     value: "student"
   }, "student"), /*#__PURE__*/_react.default.createElement("option", {
     value: "teacher"
@@ -40394,7 +40405,69 @@ var Register = function Register() {
 
 var _default = Register;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","react-router":"node_modules/react-router/index.js","../../api/Auth":"components/api/Auth.js","react-router-dom":"node_modules/react-router-dom/index.js"}],"components/api/category.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-router":"node_modules/react-router/index.js","../../api/Auth":"components/api/Auth.js","react-router-dom":"node_modules/react-router-dom/index.js"}],"components/pages/students/Student.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Students = function Students() {
+  var navigate = (0, _reactRouterDom.useNavigate)();
+
+  var logoutUser = function logoutUser() {
+    localStorage.clear();
+    navigate('/login');
+  };
+
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "center"
+  }, /*#__PURE__*/_react.default.createElement("h1", null, "Welcome Students!"), /*#__PURE__*/_react.default.createElement("button", {
+    onClick: logoutUser
+  }, "Logout"));
+};
+
+var _default = Students;
+exports.default = _default;
+},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/index.js"}],"components/pages/teacher/Teacher.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Teachers = function Teachers() {
+  var navigate = (0, _reactRouterDom.useNavigate)();
+
+  var logoutUser = function logoutUser() {
+    localStorage.clear();
+    navigate('/login');
+  };
+
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "center"
+  }, /*#__PURE__*/_react.default.createElement("h1", null, "Welcome Teachers!"), /*#__PURE__*/_react.default.createElement("button", {
+    onClick: logoutUser
+  }, "Logout"));
+};
+
+var _default = Teachers;
+exports.default = _default;
+},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/index.js"}],"components/api/category.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -40860,6 +40933,10 @@ var _Login = _interopRequireDefault(require("./components/pages/Login/Login"));
 
 var _Register = _interopRequireDefault(require("./components/pages/Register/Register"));
 
+var _Student = _interopRequireDefault(require("./components/pages/students/Student"));
+
+var _Teacher = _interopRequireDefault(require("./components/pages/teacher/Teacher"));
+
 var _AllCategories = _interopRequireDefault(require("./components/pages/Trader/AllCategories"));
 
 var _AllRooms = _interopRequireDefault(require("./components/pages/Trader/AllRooms"));
@@ -40881,6 +40958,12 @@ var App = function App() {
     path: "/signup",
     element: /*#__PURE__*/_react.default.createElement(_Register.default, null)
   }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
+    path: "/student-page",
+    element: /*#__PURE__*/_react.default.createElement(_Student.default, null)
+  }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
+    path: "/teacher-page",
+    element: /*#__PURE__*/_react.default.createElement(_Teacher.default, null)
+  }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
     path: "/categories",
     element: /*#__PURE__*/_react.default.createElement(_AllCategories.default, null)
   }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
@@ -40894,7 +40977,7 @@ var App = function App() {
 
 var _default = App;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/index.js","../frontend/components/pages/Home":"components/pages/Home.js","./components/pages/Login/Login":"components/pages/Login/Login.jsx","./components/pages/Register/Register":"components/pages/Register/Register.jsx","./components/pages/Trader/AllCategories":"components/pages/Trader/AllCategories.js","./components/pages/Trader/AllRooms":"components/pages/Trader/AllRooms.js","./components/pages/Trader/NewRoomForm":"components/pages/Trader/NewRoomForm.js","./components/pages/Trader/UpdateRoomForm":"components/pages/Trader/UpdateRoomForm.js"}],"main.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/index.js","../frontend/components/pages/Home":"components/pages/Home.js","./components/pages/Login/Login":"components/pages/Login/Login.jsx","./components/pages/Register/Register":"components/pages/Register/Register.jsx","./components/pages/students/Student":"components/pages/students/Student.jsx","./components/pages/teacher/Teacher":"components/pages/teacher/Teacher.jsx","./components/pages/Trader/AllCategories":"components/pages/Trader/AllCategories.js","./components/pages/Trader/AllRooms":"components/pages/Trader/AllRooms.js","./components/pages/Trader/NewRoomForm":"components/pages/Trader/NewRoomForm.js","./components/pages/Trader/UpdateRoomForm":"components/pages/Trader/UpdateRoomForm.js"}],"main.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -40936,7 +41019,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49956" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60667" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -28,11 +28,20 @@ const LoginForm = () => {
         .then((res) => {
             console.log('ress', res);
             //if login is successful, save login data in the local storage
-            localStorage.setItem('type', res.data.type);
-            localStorage.setItem('name', res.data.name);
-            localStorage.setItem("user_id", res.data.userId);
-            localStorage.setItem('email', res.data.email);
-            navigate('/');
+            localStorage.setItem('type', res.data.data.type);
+            localStorage.setItem('name', res.data.data.name);
+            localStorage.setItem("user_id", res.data.data.userId);
+            localStorage.setItem('email', res.data.data.email);
+            //re-dirrect user's according to the role
+          const userType = localStorage.getItem('type');
+            console.log('type', userType);
+              if (userType == 'student') {
+                navigate('/student-page');
+              }else if (userType == 'teacher') {
+                navigate('/teacher-page');
+              } else if(userType == 'admin') {
+                navigate('/rooms');
+              }
         })
   }
 
