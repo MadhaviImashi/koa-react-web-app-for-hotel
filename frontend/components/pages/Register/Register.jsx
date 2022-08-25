@@ -47,7 +47,7 @@ const Register = () => {
             </label><br />
             <label>select user type:
                 <select name="type" value={registeredData.type} onChange={handleChange}>
-                    <option value="student">student</option>
+                    <option defaultValue={'student'} value="student">student</option>
                     <option value="teacher">teacher</option>
                     <option value="admin">admin</option>
                 </select>

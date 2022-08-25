@@ -50,7 +50,7 @@ const login = async (ctx) => {
                     message: "login successful",
                     data: {
                         userId: user._id.toString() ,
-                        type: user.type,
+                        type: user.type || 'student',
                         email:user.email,
                         name:user.name
                     }
