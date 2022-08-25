@@ -40376,7 +40376,8 @@ var Register = function Register() {
     type: "text",
     name: "name",
     value: registeredData.name || "",
-    onChange: handleChange
+    onChange: handleChange,
+    required: true
   })), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("label", null, "select user type:", /*#__PURE__*/_react.default.createElement("select", {
     name: "type",
     value: registeredData.type,
@@ -40389,15 +40390,18 @@ var Register = function Register() {
   }, "teacher"), /*#__PURE__*/_react.default.createElement("option", {
     value: "admin"
   }, "admin"))), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("label", null, "Enter your email:", /*#__PURE__*/_react.default.createElement("input", {
-    type: "text",
+    type: "email" //validation
+    ,
     name: "email",
     value: registeredData.email || "",
-    onChange: handleChange
+    onChange: handleChange,
+    required: true
   })), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("label", null, "Enter your password:", /*#__PURE__*/_react.default.createElement("input", {
     type: "number",
     name: "password",
     value: registeredData.password || "",
-    onChange: handleChange
+    onChange: handleChange,
+    required: true
   })), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("input", {
     type: "submit"
   }));

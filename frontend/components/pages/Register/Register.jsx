@@ -43,6 +43,7 @@ const Register = () => {
                     name="name"
                     value={registeredData.name || ""}
                     onChange={handleChange}
+                    required
                 />
             </label><br />
             <label>select user type:
@@ -54,10 +55,11 @@ const Register = () => {
             </label><br />
             <label>Enter your email:
                 <input
-                    type="text"
+                    type="email" //validation
                     name="email"
                     value={registeredData.email || ""}
                     onChange={handleChange}
+                    required
                 />
             </label><br />
             <label>Enter your password:
@@ -66,6 +68,7 @@ const Register = () => {
                     name="password"
                     value={registeredData.password || ""}
                     onChange={handleChange}
+                    required
                 />
             </label><br />
             <input type="submit" />
