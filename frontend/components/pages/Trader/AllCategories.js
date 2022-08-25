@@ -9,9 +9,8 @@ const Categories = () => {
   useEffect(() => {
     getAllCategories("/api/categories/all")
       .then((res) => {
-          console.log(res.data);
-          setLoadedCategories(res.data);
-          console.log('after', loadedCategories);
+          console.log('res.data: ', res.data);
+          setLoadedCategories(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -28,7 +27,7 @@ const Categories = () => {
           <br /><h3>All Categories</h3><br />
           <ul>
             {loadedCategories.map((item) => (
-              <li key={item.id} className="item">
+              <li key={item._id} className="item">
                 <div>{item.name}</div>
                     <div>Description: {item.description}</div><br/>
                     <div>Room: {item.room}</div><br/>

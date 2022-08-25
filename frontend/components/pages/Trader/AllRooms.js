@@ -18,7 +18,6 @@ const Categories = () => {
       .then((res) => {
           console.log(res.data);
           setloadedRooms(res.data);
-          console.log('after', loadedRooms);
       })
       .catch((err) => {
         console.log(err);
