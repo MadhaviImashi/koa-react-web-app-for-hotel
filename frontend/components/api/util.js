@@ -1,12 +1,11 @@
 
 /**APIs calls of all CRUD http requests are implemented in this class */
 let userID = localStorage.getItem('user_id');
-const axios = require("axios").default;
+const axios = require("axios");
 
 const BASE_URL = "http://localhost:4000";
 
 export const getRequest = (uri) => {
-
   return new Promise((resolve, reject) => {
     axios
       .get(`${BASE_URL}${uri}`,
@@ -22,9 +21,6 @@ export const getRequest = (uri) => {
         console.log(error);
         reject(error);
       })
-      .then(() => {
-        //always get executed
-      });
   });
 };
 
@@ -42,9 +38,6 @@ export const getByIDRequest = (uri, id) => {
       .catch(function (error) {
         reject(error);
       })
-      .then(function () {
-        // always executed
-      });
   });
 };
 
@@ -97,9 +90,6 @@ export const deleteRequest = (uri, id) => {
       .catch(function (error) {
         reject(error);
       })
-      .then(function () {
-        // always executed
-      });
   });
 }
 

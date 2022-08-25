@@ -3,8 +3,7 @@ const bodyParser = require("koa-bodyparser");
 //const cors 3rd party pckg- to enable communication between 2 different host platforms
 const Cors = require("koa-cors");
 const KoaRouter = require('koa-router');
-const DbClient = require('./dal/index.js');
-const mongoose = require('mongoose');
+const dbConnect = require('./dal/index.js');
 //import routes
 const categoryRouter = require('./routes/category');
 const roomRouter = require('./routes/room');
@@ -32,7 +31,7 @@ app.use(roomRouter.routes())
 app.use(authRouter.routes())
 
 app.listen(PORT, () => {
-    DbClient(); //run the mongodb connection file
+    dbConnect(); //run the mongodb connection file
     console.log(`server started on port ${PORT}`);
 });
 

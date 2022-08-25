@@ -40072,7 +40072,7 @@ exports.updateRequest = exports.postRequest = exports.getRequest = exports.getBy
 /**APIs calls of all CRUD http requests are implemented in this class */
 var userID = localStorage.getItem('user_id');
 
-var axios = require("axios").default;
+var axios = require("axios");
 
 var BASE_URL = "http://localhost:4000";
 
@@ -40087,7 +40087,6 @@ var getRequest = function getRequest(uri) {
     }).catch(function (error) {
       console.log(error);
       reject(error);
-    }).then(function () {//always get executed
     });
   });
 };
@@ -40104,7 +40103,6 @@ var getByIDRequest = function getByIDRequest(uri, id) {
       resolve(response);
     }).catch(function (error) {
       reject(error);
-    }).then(function () {// always executed
     });
   });
 };
@@ -40154,7 +40152,6 @@ var deleteRequest = function deleteRequest(uri, id) {
       resolve(response);
     }).catch(function (error) {
       reject(error);
-    }).then(function () {// always executed
     });
   });
 };
