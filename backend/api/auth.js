@@ -1,85 +1,62 @@
-const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
-const signup = async (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        const error = new Error('Validation failed.');
-        error.statusCode = 422;
-        error.data = errors.array();
-        throw error;
-    }
-
-    const firstName = req.body.firstName;
-    const lastName = req.body.lastName;
-    const email = req.body.email;
-    const password = req.body.password;
-    const mobile = req.body.mobile;
-    const type = req.body.type;
-
+const signup = async (ctx) => {
+    const newUser = ctx.request.body;
+    const name = newUser.name;
+    const email = newUser.email;
+    const password = newUser.password;
+    const type = newUser.type;
     try {
-        const hashedPw = await bcrypt.hash(password, 12);
-
+        const hashedPw = await bcrypt.hash(password, 12); //encrypt pwd
         const user = new User({
             email,
             password: hashedPw,
-            firstName,
-            lastName,
-            mobile,
+            name,
             type
         });
         const result = await user.save();
-        res.status(201).json({ message: 'User created!', userId: result._id });
+        ctx.status = 201;
+        return ctx.body = {
+            message: "user created",
+            userId: result._id.toString() ,
+        };
     } catch (err) {
-        if (!err.statusCode) {
-            err.statusCode = 500;
+        ctx.status = err.status || 500;
+        return ctx.body = {
+            message: "Registration failed"
         }
-        next(err);
     }
 };
 
-
-const login = async (req, res, next) => {
-    const email = req.body.email;
-    const password = req.body.password;
-    let loadedUser;
+const login = async (ctx) => {
     try {
+        console.log('reqq', ctx.request.body);
+        const loginData = ctx.request.body;
+        console.log("lll", loginData);
+        const email = loginData.email;
+        const password = loginData.password;
+
         const user = await User.findOne({ email: email });
-        if (!user) {
-            const error = new Error('A user with this email could not be found.');
-            error.statusCode = 401;
-            throw error;
+        console.log('userr', user);
+        if (user) {
+            const isEqual = await bcrypt.compare(password, user.password);
+            if (isEqual) {
+                //send the response
+                ctx.status = 200;
+                return ctx.body = {
+                    userId: user._id.toString() ,
+                    type: user.type,
+                    email:user.email,
+                    name:user.name
+                };
+            }
         }
-        loadedUser = user;
-        const isEqual = await bcrypt.compare(password, user.password);
-        if (!isEqual) {
-            const error = new Error('Wrong password!');
-            error.statusCode = 401;
-            throw error;
-        }
-        const token = jwt.sign(
-            {
-                email: loadedUser.email,
-                userId: loadedUser._id.toString()
-            },
-            process.env.SECRET,
-            { expiresIn: '1h' }
-        );
-        res.status(200).json({
-            token: token,
-            userId: loadedUser._id.toString() ,
-            type: loadedUser.type,
-            mobile:loadedUser.mobile,
-            email:loadedUser.email,
-            name:loadedUser.firstName
-        });
     } catch (err) {
-        if (!err.statusCode) {
-            err.statusCode = 500;
+        ctx.status = err.status || 500;
+        return ctx.body = {
+            message: "authentication failed"
         }
-        next(err);
     }
 };
 

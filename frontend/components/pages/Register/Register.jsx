@@ -1,180 +1,73 @@
-import {
-    Card,
-    Grid,
-    TextField,
-    Button
-} from '@mui/material'
 import React  from 'react'
-import { Box, styled} from '@mui/system'
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import * as Yup from "yup";
-import Swal from 'sweetalert2'
+import {useState, useEffect} from "react";
 import {useNavigate} from "react-router";
-import { signup } from '../../../../backend/api/auth';
-
-const validationSchema = yup.object({
-    firstName:yup
-        .string('Enter your first name')
-        .max(30,"Input 15 characters or below")
-        .matches(/^[A-Za-z ]*$/, 'Please enter a valid name')
-        .required('Required'),
-    lastName:yup
-        .string('Enter your last name')
-        .max(30,"Input 15 characters or below")
-        .matches(/^[A-Za-z ]*$/, 'Please enter a valid name')
-        .required('Required'),
-    email:  Yup.string().email('Invalid email').required('Required'),
-    mobile:yup.string('wrong number'),
-    password: yup
-        .string('Enter your password')
-        .min(8, 'Password should be of minimum 8 characters length')
-        .required('Password is required'),
-    passConf: Yup.string()
-        .oneOf([Yup.ref('password'), null], 'Passwords must match').required('Required')
-});
-
+import {login, signup} from '../../../../backend/api/auth';
+import {Link} from "react-router-dom";
 
 const Register = () => {
     const navigate = useNavigate();
     const [isLoggedIn] = React.useState(localStorage.getItem("token"));
+    const [registeredData, setRegistrationData] = useState({});
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (isLoggedIn) {
             navigate("/")
         }
     }, []);
 
-    const formik = useFormik({
-        initialValues: {
-            email: '',
-            password: '',
-            firstName:'',
-            lastName:'',
-            passConf:'',
-            mobile:''
-        },
-        validationSchema: validationSchema,
-        onSubmit: (values) => {
-           
-          const data = {
-            email: values.email,
-            password: values.password,
-            passwordConfirmation: values.passConf,
-            firstName: values.firstName,
-            lastName: values.lastName,
-            mobile: values.mobile,
-            type:'user'
-          }
-          signup('/api/auth/signup', data).then(res => {
-                    navigate("/login")
-                })
-                .catch(err => {
-                    console.log(err);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Registration Failed!',
-                    })
-                });
-        },
-    });
+    const handleChange = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        setRegistrationData(values => ({...values, [name]: value}))
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log('new user data', registeredData);
+        //send login data to the backend
+        login('/api/auth/signup', registeredData)
+            .then((res) => {
+                console.log('ress', res.data);
+                navigate('/login');
+            })
+    }
 
     return (
-        <div>
-            this is Sign UP page
-        </div>
-        // <Root>
-        //     <Card className="card" style={{width:"700px"}}>
-        //         <Grid container >
-        //             <Grid item lg={12} md={12} sm={12} xs={12}>
-        //             <ContentBox>
-        //                 <form onSubmit={formik.handleSubmit}>
-        //                     <TextField
-        //                         fullWidth
-        //                         id="firstName"
-        //                         name="firstName"
-        //                         label="First Name"
-        //                         value={formik.values.firstName}
-        //                         onChange={formik.handleChange}
-        //                         error={formik.touched.firstName && Boolean(formik.errors.firstName)}
-        //                         helperText={formik.touched.firstName && formik.errors.firstName}
-        //                         style={{marginBottom:"10px"}}
-        //                     />
-        //                     <TextField
-        //                         fullWidth
-        //                         id="lastName"
-        //                         name="lastName"
-        //                         label="Last Name"
-        //                         value={formik.values.lastName}
-        //                         onChange={formik.handleChange}
-        //                         error={formik.touched.lastName && Boolean(formik.errors.lastName)}
-        //                         helperText={formik.touched.lastName&& formik.errors.lastName}
-        //                         style={{marginBottom:"10px"}}
-        //                     />
-        //                     <TextField
-        //                         fullWidth
-        //                         id="email"
-        //                         name="email"
-        //                         label="Email"
-        //                         type="email"
-        //                         value={formik.values.email}
-        //                         onChange={formik.handleChange}
-        //                         error={formik.touched.email && Boolean(formik.errors.email)}
-        //                         helperText={formik.touched.email&& formik.errors.email}
-        //                         style={{marginBottom:"10px"}}
-        //                     />
-
-        //                     <TextField
-        //                         fullWidth
-        //                         id="mobile"
-        //                         name="mobile"
-        //                         label="Phone Number"
-        //                         type="text"
-        //                         value={formik.values.mobile}
-        //                         onChange={formik.handleChange}
-        //                         error={formik.touched.mobile && Boolean(formik.errors.mobile)}
-        //                         helperText={formik.touched.mobile && formik.errors.mobile}
-        //                         style={{marginBottom:"10px"}}
-        //                     />
-        //                     <TextField
-        //                         fullWidth
-        //                         id="password"
-        //                         name="password"
-        //                         label="Password"
-        //                         type="password"
-        //                         value={formik.values.password}
-        //                         onChange={formik.handleChange}
-        //                         error={formik.touched.password && Boolean(formik.errors.password)}
-        //                         helperText={formik.touched.password && formik.errors.password}
-        //                         style={{marginBottom:"10px"}}
-        //                     />
-        //                     <TextField
-        //                         fullWidth
-        //                         id="passConf"
-        //                         name="passConf"
-        //                         label="Password Confirm"
-        //                         type="password"
-        //                         value={formik.values.passConf}
-        //                         onChange={formik.handleChange}
-        //                         error={formik.touched.passConf && Boolean(formik.errors.passConf)}
-        //                         helperText={formik.touched.passConf && formik.errors.passConf}
-        //                         style={{marginBottom:"10px"}}
-        //                     />
-
-        //                     <ThemeProvider theme={InnerTheme}>
-        //                         <Button color="primary" variant="contained" fullWidth type="submit" style={{marginBottom:"20px"}}>
-        //                             Register
-        //                         </Button>
-        //                     </ThemeProvider>
-        //                 </form>
-        //             </ContentBox>
-        //             </Grid>
-        //         </Grid>
-        //     </Card>
-        // </Root>
-    )
+        <form onSubmit={handleSubmit}>
+            <label>Enter your Name:
+                <input
+                    type="text"
+                    name="name"
+                    value={registeredData.name || ""}
+                    onChange={handleChange}
+                />
+            </label>
+            <label>select user type:
+                <select name="type" value={registeredData.type} onChange={handleChange}>
+                    <option value="student">student</option>
+                    <option value="teacher">teacher</option>
+                    <option value="admin">admin</option>
+                </select>
+            </label>
+            <label>Enter your email:
+                <input
+                    type="text"
+                    name="email"
+                    value={registeredData.email || ""}
+                    onChange={handleChange}
+                />
+            </label>
+            <label>Enter your password:
+                <input
+                    type="number"
+                    name="password"
+                    value={registeredData.password || ""}
+                    onChange={handleChange}
+                />
+            </label>
+            <input type="submit" />
+        </form>
+    );
 }
 
 export default Register;
