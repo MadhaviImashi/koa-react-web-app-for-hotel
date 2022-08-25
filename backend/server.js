@@ -1,5 +1,5 @@
 const Koa = require ("Koa");
-const bodyParser = require("koa-bodyParser");
+const bodyParser = require("koa-bodyparser");
 //const cors 3rd party pckg- to enable communication between 2 different host platforms
 const Cors = require("koa-cors");
 const KoaRouter = require('koa-router');
@@ -18,7 +18,6 @@ const router = new KoaRouter();
 //add a cors parameter to each request header
 app.use(Cors());
 app.use(bodyParser());
-app.use(koaBody());
 
 const PORT = process.env.PORT || 4000
 
