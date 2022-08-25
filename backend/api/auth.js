@@ -3,7 +3,7 @@ const User = require('../models/user');
 
 const signup = async (ctx) => {
     const newUser = ctx.request.body;
-    ctx.set('Content-Type', 'application/json');
+    // ctx.set('Content-Type', 'application/json');
     let userData = {
         name: newUser.name,
         email: newUser.email,
@@ -23,7 +23,7 @@ const signup = async (ctx) => {
         };
     } catch (err) {
         ctx.status = err.status || 500;
-        return ctx.body = {
+        ctx.body = {
             message: "Registration failed"
         }
     }
@@ -31,16 +31,13 @@ const signup = async (ctx) => {
 
 const login = async (ctx) => {
     try {
-        console.log('reqq', ctx.request.body);
         const loginData = ctx.request.body;
-        ctx.set('Content-Type', 'application/json');
+        // ctx.set('Content-Type', 'application/json');
 
-        console.log("lll", loginData);
         const email = loginData.email;
         const password = loginData.password;
 
         const user = await User.findOne({ email: email });
-        console.log('user data', user);
         if (user) {
             const isEqual = await bcrypt.compare(password, user.password);
             if (isEqual) {
@@ -59,7 +56,7 @@ const login = async (ctx) => {
         }
     } catch (err) {
         ctx.status = err.status || 500;
-        return ctx.body = {
+        ctx.body = {
             message: "authentication failed"
         }
     }
