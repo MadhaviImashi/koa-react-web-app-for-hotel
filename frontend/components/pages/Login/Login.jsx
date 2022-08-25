@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { useNavigate } from "react-router";
-import { login } from "../../../../backend/api/Auth";
+import { login } from "../../api/Auth";
 import {Link} from "react-router-dom";
 
 const LoginForm = () => {
@@ -26,10 +26,10 @@ const LoginForm = () => {
     //send login data to the backend
     login('/api/auth/login', loginData)
         .then((res) => {
-            console.log('ress', res.data);
+            console.log('ress', res);
             //if login is successful, save login data in the local storage
             localStorage.setItem('type', res.data.type);
-            localStorage.setItem('firstName', res.data.firstName);
+            localStorage.setItem('name', res.data.name);
             localStorage.setItem("user_id", res.data.userId);
             localStorage.setItem('email', res.data.email);
             navigate('/');
@@ -45,7 +45,7 @@ const LoginForm = () => {
               value={loginData.email || ""}
               onChange={handleChange}
           />
-        </label>
+        </label><br />
         <label>Enter your password:
           <input
               type="number"
@@ -53,7 +53,7 @@ const LoginForm = () => {
               value={loginData.password || ""}
               onChange={handleChange}
           />
-        </label>
+        </label><br />
         <input type="submit" />
           <br/><Link to='/signup'><span>Not registered yet?</span></Link>
       </form>
