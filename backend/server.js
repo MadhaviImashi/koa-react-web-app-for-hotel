@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 const categoryRouter = require('./routes/category');
 const roomRouter = require('./routes/room');
 const authRouter = require('./routes/authRoutes');
+const koaBody = require("koa-body");
 
 //create a new server(app) using Koa.j
 const app = new Koa();
@@ -17,6 +18,7 @@ const router = new KoaRouter();
 //add a cors parameter to each request header
 app.use(Cors());
 app.use(bodyParser());
+app.use(koaBody());
 
 const PORT = process.env.PORT || 4000
 
