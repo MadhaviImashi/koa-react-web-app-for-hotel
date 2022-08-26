@@ -8,6 +8,7 @@ const dbConnect = require('./dal/index.js');
 const categoryRouter = require('./routes/category');
 const roomRouter = require('./routes/room');
 const authRouter = require('./routes/authRoutes');
+const subjectRouter = require('./routes/subjects');
 const koaBody = require("koa-body");
 
 //create a new server(app) using Koa.j
@@ -20,15 +21,17 @@ app.use(bodyParser());
 
 const PORT = process.env.PORT || 4000
 
-app.use(async (ctx, next) => {
-  ctx.body = 'Hello World';
-  await next();
-});
+// app.use(async (ctx, next) => {
+//   ctx.body = 'Hello World';
+//   await next();
+// });
 
-app.use(router.routes()).use(router.allowedMethods());
+app.use(router.routes());
+app.use(router.allowedMethods());
 app.use(categoryRouter.routes())
-app.use(roomRouter.routes())
-app.use(authRouter.routes())
+app.use(roomRouter.routes());
+app.use(authRouter.routes());
+app.use(subjectRouter.routes());
 
 app.listen(PORT, () => {
     dbConnect(); //run the mongodb connection file

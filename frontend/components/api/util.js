@@ -65,12 +65,12 @@ export const updateRequest = (uri, id, data) => {
       .put(`${BASE_URL}${uri}${id}`, data, {
         params: {
           user_id: userID,
-    }
+        }
       })
-      .then(function (response) {
+      .then((response) => {
         resolve(response);
       })
-      .catch(function (error) {
+      .catch((error) => {
         reject(error);
     })
   })

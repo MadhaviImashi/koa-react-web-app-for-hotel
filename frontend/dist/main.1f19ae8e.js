@@ -40540,14 +40540,12 @@ var Categories = function Categories() {
 
   (0, _react.useEffect)(function () {
     (0, _category.getAllCategories)("/api/categories/all").then(function (res) {
-      console.log('res.data: ', res.data);
       setLoadedCategories(res.data.data);
     }).catch(function (err) {
       console.log(err);
     });
   }, []);
-  console.log('after2', loadedCategories);
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
     to: "/logout"
   }, /*#__PURE__*/_react.default.createElement("span", {
     className: "link"

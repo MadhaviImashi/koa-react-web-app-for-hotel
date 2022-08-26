@@ -50,7 +50,6 @@ const Categories = () => {
                         <li key={category.id} className="item">{category.name}</li>
                       ))}</div>
                   <button onClick={() => { showUpdateForm(true); setSelectedRoomId(item._id); }}>Update room</button>
-                  {/* {UpdateFormIsOpen ? () => { navigateToUpdateRoomForm(item.id) } : null} */}
                 </li>
               ))}
             </ul>
